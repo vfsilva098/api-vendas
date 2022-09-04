@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import routes from './routes';
-import AppError from '@shared/errors/AppError';
+import ApiError from '@shared/errors/AppError';
+import '@shared/typeorm';
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(routes);
 
 app.use((error: Error, req: Request, resp: Response) => {
-	if (error instanceof AppError) {
+	if (error instanceof ApiError) {
 		return resp.status(error.statusCode).json({
 			status: 'error',
 			message: error.message,
