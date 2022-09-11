@@ -17,7 +17,13 @@ export default function isAuthenticated(
 	const [, token] = auth.split(' ');
 
 	try {
-		verify(token, AUTH_CONFIG.secret_hash);
+		const decoded = verify(token, AUTH_CONFIG.secret_hash);
+
+		const { sub } = decoded;
+
+		req.user = {
+			id: sub as string,
+		};
 
 		return next();
 	} catch {

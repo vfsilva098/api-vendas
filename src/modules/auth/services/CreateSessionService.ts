@@ -34,7 +34,7 @@ class CreateSessionService {
 			throw new UnauthorizedError(authErrorMessage);
 		}
 
-		const token = sign({ id: user.id }, AUTH_CONFIG.secret_hash, {
+		const token = sign({}, AUTH_CONFIG.secret_hash, {
 			subject: user.id,
 			expiresIn: AUTH_CONFIG.expires_in,
 		});
