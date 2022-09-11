@@ -10,18 +10,11 @@ interface IRequest {
 	name?: string;
 	email?: string;
 	password?: string;
-	avatar?: string;
 }
 
 class UpdateUserService {
-	public async execute({
-		id,
-		name,
-		email,
-		password,
-		avatar,
-	}: IRequest): Promise<User> {
-		if (!name && !email && !password && !avatar) {
+	public async execute({ id, name, email, password }: IRequest): Promise<User> {
+		if (!name && !email && !password) {
 			throw new ApiError('Preencher campos obrigatórios!');
 		}
 		const repository = getCustomRepository(UserRepository);
@@ -47,10 +40,6 @@ class UpdateUserService {
 
 		if (password) {
 			user.password;
-		}
-
-		if (avatar) {
-			user.avatar = avatar;
 		}
 
 		await repository.save(user);

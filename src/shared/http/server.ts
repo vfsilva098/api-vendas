@@ -6,11 +6,14 @@ import routes from './routes';
 import ApiError from '@shared/errors/ApiError';
 import { errors } from 'celebrate';
 import '@shared/typeorm';
+import upload from '@config/upload';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/files', express.static(upload.directory));
 
 app.use(routes);
 
@@ -31,5 +34,5 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(3333, () => {
-	console.warn('Server started on url: http://localhost:3333/');
+	console.info('Server started on url: http://localhost:3333/');
 });
