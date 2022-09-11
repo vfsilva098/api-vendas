@@ -1,8 +1,10 @@
+import { AUTH_CONFIG } from '@config/auth';
 import UnauthorizedError from '@shared/errors/UnauthorizedError';
 import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import { getCustomRepository } from 'typeorm';
-import User from '../typeorm/entities/User';
-import UserRepository from '../typeorm/repositories/UserRepository';
+import User from '../../user/typeorm/entities/User';
+import UserRepository from '../../user/typeorm/repositories/UserRepository';
 
 interface IRequest {
 	email: string;
@@ -11,6 +13,8 @@ interface IRequest {
 
 interface IResponse {
 	user: User;
+	token: string;
+	refreshToken?: string;
 }
 
 const authErrorMessage = 'Email ou senha incorreto!';
@@ -30,7 +34,12 @@ class CreateSessionService {
 			throw new UnauthorizedError(authErrorMessage);
 		}
 
-		return { user };
+		const token = sign({ id: user.id }, AUTH_CONFIG.secret_hash, {
+			subject: user.id,
+			expiresIn: AUTH_CONFIG.expires_in,
+		});
+
+		return { user, token };
 	}
 }
 
