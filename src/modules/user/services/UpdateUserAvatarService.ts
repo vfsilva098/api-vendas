@@ -5,7 +5,6 @@ import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import UserRepository from '../typeorm/repositories/UserRepository';
 import ShowUserService from './ShowUserService';
-import ApiError from '@shared/errors/ApiError';
 
 interface IRequest {
 	userId: string;
@@ -23,8 +22,10 @@ class UpdateUserAvatarService {
 			const existsFile = await fs.promises.stat(pathAvatarFile);
 
 			if (existsFile) {
-				fs.unlink(pathAvatarFile, () => {
-					throw new ApiError('Falha ao deletar arquivo!');
+				fs.unlink(pathAvatarFile, err => {
+					if (err) {
+						throw err;
+					}
 				});
 			}
 		}
