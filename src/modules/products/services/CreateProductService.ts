@@ -1,4 +1,4 @@
-import ApiError from '@shared/errors/ApiError';
+import AlreadyExistsError from '@shared/errors/AlreadyExistsError';
 import { getCustomRepository } from 'typeorm';
 import { Product } from '../typeorm/entities/Product';
 import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
@@ -14,7 +14,7 @@ class CreateProductService {
 		const alreadyExists = await repository.findByName(name);
 
 		if (alreadyExists) {
-			throw new ApiError('Nome do produto já cadastrado!');
+			throw new AlreadyExistsError('Nome do produto já cadastrado!');
 		}
 
 		const product = repository.create({

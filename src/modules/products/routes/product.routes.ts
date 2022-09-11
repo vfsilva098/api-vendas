@@ -23,7 +23,7 @@ productsRouter.put(
 		[Segments.BODY]: {
 			name: Joi.string(),
 			price: Joi.number().precision(2),
-			quantity: Joi.number(),
+			quantity: Joi.number().required(),
 		},
 		[Segments.PARAMS]: {
 			id: Joi.string().uuid().required(),

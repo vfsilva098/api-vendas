@@ -1,4 +1,4 @@
-import ApiError from '@shared/errors/ApiError';
+import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
 import { Product } from '../typeorm/entities/Product';
 import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
@@ -9,7 +9,7 @@ class ShowProductService {
 		const product = await repository.findOne(id);
 
 		if (!product) {
-			throw new ApiError('Produto não encontrado!');
+			throw new NotFoundError('Produto não encontrado!');
 		}
 		return product;
 	}

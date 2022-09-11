@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import routes from './routes';
@@ -16,15 +16,15 @@ app.use(routes);
 
 app.use(errors());
 
-app.use((error: Error, req: Request, resp: Response) => {
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 	if (error instanceof ApiError) {
-		return resp.status(error.statusCode).json({
+		return res.status(error.statusCode).json({
 			status: 'error',
 			message: error.message,
 		});
 	}
 
-	return resp.status(500).json({
+	return res.status(500).json({
 		status: 'error',
 		message: 'Internal Server Error',
 	});

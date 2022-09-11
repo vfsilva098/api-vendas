@@ -1,4 +1,5 @@
-import ApiError from '@shared/errors/ApiError';
+import AlreadyExistsError from '@shared/errors/AlreadyExistsError';
+import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
 import { Product } from '../typeorm/entities/Product';
 import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
@@ -21,13 +22,13 @@ class UpdateProductService {
 		const product = await repository.findOne(id);
 
 		if (!product) {
-			throw new ApiError('Produto não encontrado!');
+			throw new NotFoundError('Produto não encontrado!');
 		}
 
 		const alreadyExists = await repository.findByName(name);
 
 		if (alreadyExists && name !== product.name) {
-			throw new ApiError('Nome do produto já cadastrado!');
+			throw new AlreadyExistsError('Nome do produto já cadastrado!');
 		}
 
 		product.name = name;
