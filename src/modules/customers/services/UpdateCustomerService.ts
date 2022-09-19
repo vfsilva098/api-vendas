@@ -10,7 +10,7 @@ interface IRequest {
 	email: string;
 }
 
-class UpdateCustumerService {
+class UpdateCustomerService {
 	public async execute({ id, name, email }: IRequest): Promise<Custumer> {
 		const repository = getCustomRepository(CustumerRespository);
 		const custumer = await repository.findOne(id);
@@ -21,7 +21,7 @@ class UpdateCustumerService {
 
 		const emailExists = await repository.findByEmail(email);
 
-		if (emailExists && id !== custumer.id) {
+		if (emailExists && id !== emailExists.id) {
 			throw new AlreadyExistsError('Um cliente já utiliza este email!');
 		}
 
@@ -34,4 +34,4 @@ class UpdateCustumerService {
 	}
 }
 
-export default UpdateCustumerService;
+export default UpdateCustomerService;

@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
 import CustumerRespository from '../typeorm/repositories/CustumerRepository';
-import ShowCustumerService from './ShowCustumerService';
+import ShowCustumerService from './ShowCustomerService';
 
-class DeleteCustumerService {
+class DeleteCustomerService {
 	public async execute(id: string): Promise<void> {
 		const showService = new ShowCustumerService();
 		const repository = getCustomRepository(CustumerRespository);
@@ -12,4 +12,4 @@ class DeleteCustumerService {
 	}
 }
 
-export default DeleteCustumerService;
+export default DeleteCustomerService;
