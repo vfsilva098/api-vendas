@@ -1,5 +1,4 @@
 import AlreadyExistsError from '@shared/errors/AlreadyExistsError';
-import ApiError from '@shared/errors/ApiError';
 import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
 import { Product } from '../typeorm/entities/Product';
@@ -7,9 +6,9 @@ import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
 
 interface IRequest {
 	id: string;
-	name?: string;
-	price?: number;
-	quantity?: number;
+	name: string;
+	price: number;
+	quantity: number;
 }
 
 class UpdateProductService {
@@ -19,9 +18,6 @@ class UpdateProductService {
 		price,
 		quantity,
 	}: IRequest): Promise<Product> {
-		if (!name && !price && !quantity) {
-			throw new ApiError('Preencher campos obrigatórios!');
-		}
 		const repository = getCustomRepository(ProductRepository);
 		const product = await repository.findOne(id);
 

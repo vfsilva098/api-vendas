@@ -30,16 +30,22 @@ export default class UserController {
 	}
 
 	public async update(req: Request, res: Response): Promise<Response> {
-		const { id } = req.params;
-		const { name, email, password } = req.body;
+		const { id } = req.user;
+		const { name, email, password, old_password } = req.body;
 		const service = new UpdateUserService();
-		const user = await service.execute({ id, name, email, password });
+		const user = await service.execute({
+			id,
+			name,
+			email,
+			password,
+			old_password,
+		});
 
 		return res.json(user);
 	}
 
 	public async findById(req: Request, res: Response): Promise<Response> {
-		const { id } = req.params;
+		const { id } = req.user;
 		const service = new ShowUserService();
 		const user = await service.execute(id);
 

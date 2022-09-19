@@ -28,15 +28,17 @@ usersRouter.put(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			name: Joi.string(),
-			email: Joi.string().email(),
-			password: Joi.string(),
-		},
-		[Segments.PARAMS]: {
-			id: Joi.string().uuid().required(),
+			name: Joi.string().required(),
+			email: Joi.string().email().required(),
+			old_password: Joi.string(),
+			password: Joi.string().optional(),
+			password_confirmation: Joi.string()
+				.optional()
+				.valid(Joi.ref('password'))
+				.when('password', { is: Joi.exist(), then: Joi.required() }),
 		},
 	}),
-	usersController.create,
+	usersController.update,
 );
 usersRouter.get(
 	'/:id',
