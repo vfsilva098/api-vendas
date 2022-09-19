@@ -1,3 +1,4 @@
+import EtherealMail from '@config/mail/EtherealMail';
 import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
 import UserRepository from '../typeorm/repositories/UserRepository';
@@ -13,9 +14,22 @@ class SendForgotPasswordEmailService {
 			throw new NotFoundError('Email não cadastrado!');
 		}
 
-		const token = await userTokenRepository.generate(user.id);
+		const { token } = await userTokenRepository.generate(user.id);
 
-		console.log(token);
+		EtherealMail.sendMail({
+			to: {
+				name: user.name,
+				email,
+			},
+			subject: '[API Vendas] Recuperação de senha.',
+			htmlTemplate: {
+				template: `Olá {{name}}: {{token}}`,
+				variables: {
+					name: user.name,
+					token,
+				},
+			},
+		});
 	}
 }
 
