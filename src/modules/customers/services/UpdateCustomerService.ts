@@ -13,9 +13,9 @@ interface IRequest {
 class UpdateCustomerService {
 	public async execute({ id, name, email }: IRequest): Promise<Customer> {
 		const repository = getCustomRepository(CustomerRespository);
-		const custumer = await repository.findOne(id);
+		const customer = await repository.findOne(id);
 
-		if (!custumer) {
+		if (!customer) {
 			throw new NotFoundError('Cliente não encontrado!');
 		}
 
@@ -25,12 +25,12 @@ class UpdateCustomerService {
 			throw new AlreadyExistsError('Um cliente já utiliza este email!');
 		}
 
-		custumer.name = name;
-		custumer.email = email;
+		customer.name = name;
+		customer.email = email;
 
-		await repository.save(custumer);
+		await repository.save(customer);
 
-		return custumer;
+		return customer;
 	}
 }
 

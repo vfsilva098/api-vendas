@@ -6,12 +6,12 @@ import CustomerRespository from '../typeorm/repositories/CustomerRepository';
 class ShowCustomerService {
 	public async execute(id: string): Promise<Customer> {
 		const repository = getCustomRepository(CustomerRespository);
-		const custumer = await repository.findOne(id);
+		const customer = await repository.findOne(id);
 
-		if (!custumer) {
+		if (!customer) {
 			throw new NotFoundError('Cliente não encontrado!');
 		}
-		return custumer;
+		return customer;
 	}
 }
 
