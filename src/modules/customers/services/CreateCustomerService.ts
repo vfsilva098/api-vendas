@@ -1,6 +1,6 @@
 import AlreadyExistsError from '@shared/errors/AlreadyExistsError';
 import { getCustomRepository } from 'typeorm';
-import Custumer from '../typeorm/entities/Custumer';
+import Customer from '../typeorm/entities/Customer';
 import CustumerRespository from '../typeorm/repositories/CustumerRepository';
 
 interface IRequest {
@@ -9,7 +9,7 @@ interface IRequest {
 }
 
 class CreateCustomerService {
-	public async execute({ name, email }: IRequest): Promise<Custumer> {
+	public async execute({ name, email }: IRequest): Promise<Customer> {
 		const repository = getCustomRepository(CustumerRespository);
 		const emailExists = await repository.findByEmail(email);
 

@@ -1,10 +1,10 @@
 import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
-import Custumer from '../typeorm/entities/Custumer';
+import Customer from '../typeorm/entities/Customer';
 import CustumerRespository from '../typeorm/repositories/CustumerRepository';
 
 class ShowCustomerService {
-	public async execute(id: string): Promise<Custumer> {
+	public async execute(id: string): Promise<Customer> {
 		const repository = getCustomRepository(CustumerRespository);
 		const custumer = await repository.findOne(id);
 
