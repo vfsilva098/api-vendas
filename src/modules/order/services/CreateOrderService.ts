@@ -51,7 +51,7 @@ class CreateOrderService {
 				product.quantity,
 		);
 
-		if (checkQuantities) {
+		if (checkQuantities.length > 0) {
 			throw new ApiError(
 				`Quantidade dos produtos: ${checkQuantities[0].id} está acima do estoque!`,
 			);
@@ -71,9 +71,9 @@ class CreateOrderService {
 		const { order_products } = order;
 
 		const updatedProductQuantity = order_products.map(order_product => ({
-			id: order_product.product.id,
+			id: order_product.product_id,
 			quantity:
-				products.filter(product => product.id === order_product.product.id)[0]
+				products.filter(product => product.id === order_product.product_id)[0]
 					.quantity - order_product.quantity,
 		}));
 

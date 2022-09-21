@@ -6,14 +6,14 @@ import ShowCustomerService from '../services/ShowCustomerService';
 import UpdateCustomerService from '../services/UpdateCustomerService';
 
 export default class CustomerController {
-	public async index(req: Request, res: Response) {
+	public async index(req: Request, res: Response): Promise<Response> {
 		const service = new ListCustomerService();
 		const customers = await service.execute();
 
 		return res.json(customers);
 	}
 
-	public async show(req: Request, res: Response) {
+	public async show(req: Request, res: Response): Promise<Response> {
 		const { id } = req.params;
 		const service = new ShowCustomerService();
 		const customer = await service.execute(id);
@@ -21,7 +21,7 @@ export default class CustomerController {
 		return res.json(customer);
 	}
 
-	public async create(req: Request, res: Response) {
+	public async create(req: Request, res: Response): Promise<Response> {
 		const { name, email } = req.body;
 		const service = new CreateCustomerService();
 		const customer = await service.execute({ name, email });
@@ -29,7 +29,7 @@ export default class CustomerController {
 		return res.status(201).json(customer);
 	}
 
-	public async update(req: Request, res: Response) {
+	public async update(req: Request, res: Response): Promise<Response> {
 		const { name, email } = req.body;
 		const { id } = req.params;
 		const service = new UpdateCustomerService();
@@ -38,7 +38,7 @@ export default class CustomerController {
 		return res.json(customer);
 	}
 
-	public async delete(req: Request, res: Response) {
+	public async delete(req: Request, res: Response): Promise<Response> {
 		const { id } = req.params;
 		const service = new DeleteCustomerService();
 
