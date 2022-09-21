@@ -1,7 +1,7 @@
 import AlreadyExistsError from '@shared/errors/AlreadyExistsError';
 import NotFoundError from '@shared/errors/NotFoundError';
 import { getCustomRepository } from 'typeorm';
-import { Product } from '../typeorm/entities/Product';
+import Product from '../typeorm/entities/Product';
 import { ProductRepository } from '../typeorm/repositories/ProductsRepository';
 
 interface IRequest {
