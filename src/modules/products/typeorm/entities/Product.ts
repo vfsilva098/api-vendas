@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import OrderProduct from '@modules/order/typeorm/entities/OrderProduct';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('products')
 class Product {
@@ -13,6 +14,9 @@ class Product {
 
 	@Column('int')
 	quantity: number;
+
+	@OneToMany(() => OrderProduct, order_product => order_product.product)
+	order_products: OrderProduct[];
 
 	@Column('time with time zone')
 	created_at: Date;
